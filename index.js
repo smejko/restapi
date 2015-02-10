@@ -71,6 +71,13 @@ app.delete('/:collectionName/:id', function(req, res, next) {
 
 app.options('/:collectionName/:id', function(req, res, next) {
 	res.set("Access-Control-Allow-Methods", "PUT, DELETE");
+	res.set("Access-Control-Allow-Headers", "Content-Type");
+	res.end();
+});
+
+app.options('/:collectionName', function(req, res, next) {
+	res.set("Access-Control-Allow-Methods", "POST");
+	res.set("Access-Control-Allow-Headers", "Content-Type");
 	res.end();
 });
 
