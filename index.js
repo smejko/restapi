@@ -57,7 +57,10 @@ app.put('/:collectionName/:id', function(req, res, next) {
 	var id = new ObjectID(req.params.id);
 	req.collection.update({ _id: id }, { $set: req.body }, { w: 1 }, function(e, result) {
 		if(e) return next(e);
-		res.send(result === 1 ? { msg: 'success' } : { msg: 'error' });
+		if(result !== 1)
+			res.status(404).send("Resource not found.");
+		else
+			res.send({ msg: 'success' });
 	});
 });
 
@@ -65,7 +68,10 @@ app.delete('/:collectionName/:id', function(req, res, next) {
 	var id = new ObjectID(req.params.id);
 	req.collection.remove({ _id: id }, { w: 1, single: true }, function(e, result) {
 		if(e) return next(e);
-		res.send(result ===  1 ? { msg: 'success' } : { msg: 'error' });
+		if(result !== 1)
+			res.status(404).send("Resource not found.");
+		else
+			res.send({ msg: 'success' });
 	});
 });
 
